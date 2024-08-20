@@ -15,14 +15,20 @@ function Chatbot() {
     // Add user message to chat
     setMessages(prev => [...prev, { text: message, isUser: true }]);
 
+    const prompt = {
+      "model": "aida_2",
+      "prompt": message,
+      "stream": false,
+    }
+
     // Send message to API and get response
     try {
-      const response = await fetch('YOUR_API_ENDPOINT', {
+      const response = await fetch('http://localhost:11434/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify(prompt),
       });
       const data: { response: string } = await response.json();
 
